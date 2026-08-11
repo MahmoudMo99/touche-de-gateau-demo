@@ -75,7 +75,11 @@
     </div>
 
     <div class="categories__grid">
-      <a routerLink="/products" class="category-card category-card--large">
+      <a
+        routerLink="/products"
+        [queryParams]="{ category: 'كيك' }"
+        class="category-card category-card--large"
+      >
         <div class="category-card__image">
           <img src="/images/categories/cakes.jpg" alt="الكيك" />
         </div>
@@ -84,14 +88,16 @@
 
         <div class="category-card__content">
           <span>01</span>
+
           <h3>الكيك</h3>
+
           <p>تشكيلة متنوعة لكل مناسبة</p>
 
           <div class="category-card__arrow">←</div>
         </div>
       </a>
 
-      <a routerLink="/products" class="category-card">
+      <a routerLink="/products" [queryParams]="{ category: 'تشيز كيك' }" class="category-card">
         <div class="category-card__image">
           <img src="/images/categories/cheesecake.jpg" alt="التشيز كيك" />
         </div>
@@ -100,14 +106,16 @@
 
         <div class="category-card__content">
           <span>02</span>
+
           <h3>التشيز كيك</h3>
+
           <p>نكهات خفيفة وغنية</p>
 
           <div class="category-card__arrow">←</div>
         </div>
       </a>
 
-      <a routerLink="/products" class="category-card">
+      <a routerLink="/products" [queryParams]="{ category: 'ميني كيك' }" class="category-card">
         <div class="category-card__image">
           <img src="/images/categories/mini-desserts.jpg" alt="الحلويات الصغيرة" />
         </div>
@@ -116,24 +124,32 @@
 
         <div class="category-card__content">
           <span>03</span>
+
           <h3>الحلويات الصغيرة</h3>
+
           <p>تفاصيل صغيرة بطعم مميز</p>
 
           <div class="category-card__arrow">←</div>
         </div>
       </a>
 
-      <a routerLink="/products" class="category-card category-card--wide">
+      <a
+        routerLink="/products"
+        [queryParams]="{ category: 'قطع الكيك' }"
+        class="category-card category-card--wide"
+      >
         <div class="category-card__image">
-          <img src="/images/categories/bakery.jpg" alt="المخبوزات" />
+          <img src="/images/categories/bakery.jpg" alt="قطع الكيك" />
         </div>
 
         <div class="category-card__overlay"></div>
 
         <div class="category-card__content">
           <span>04</span>
-          <h3>المخبوزات والحلويات</h3>
-          <p>كوكيز، براونيز ومخبوزات مختارة</p>
+
+          <h3>قطع الكيك</h3>
+
+          <p>اختيارات صغيرة لمذاق مميز</p>
 
           <div class="category-card__arrow">←</div>
         </div>
@@ -178,7 +194,7 @@
 
       <h2>
         أكثر من مجرد
-        <span>قطعة حلوى</span>
+        <span> قطعة حلوى </span>
       </h2>
 
       <p>

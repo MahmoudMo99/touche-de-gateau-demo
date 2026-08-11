@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
-
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+
 import { PRODUCTS } from '../../../../core/data/products.data';
 import { Product } from '../../../../core/models/product.model';
 import { CartService } from '../../../../core/services/cart.service';
@@ -14,14 +14,6 @@ import { ProductCard } from '../../../../shared/components/product-card/product-
   styleUrl: './products.scss',
 })
 export class Products {
-  constructor() {
-    effect(() => {
-      const search = this.queryParams().get('search') ?? '';
-
-      this.searchTerm.set(search);
-    });
-  }
-
   private readonly cartService = inject(CartService);
   private readonly route = inject(ActivatedRoute);
 
@@ -38,6 +30,7 @@ export class Products {
 
   readonly filteredProducts = computed(() => {
     const search = this.searchTerm().trim().toLowerCase();
+
     const category = this.selectedCategory();
 
     return this.products.filter((product) => {
@@ -54,6 +47,22 @@ export class Products {
     });
   });
 
+  constructor() {
+    effect(() => {
+      const search = this.queryParams().get('search') ?? '';
+
+      const category = this.queryParams().get('category') ?? 'الكل';
+
+      this.searchTerm.set(search);
+
+      if (this.categories.includes(category)) {
+        this.selectedCategory.set(category);
+      } else {
+        this.selectedCategory.set('الكل');
+      }
+    });
+  }
+
   selectCategory(category: string): void {
     this.selectedCategory.set(category);
   }
@@ -62,6 +71,11 @@ export class Products {
     const input = event.target as HTMLInputElement;
 
     this.searchTerm.set(input.value);
+  }
+
+  resetFilters(): void {
+    this.searchTerm.set('');
+    this.selectedCategory.set('الكل');
   }
 
   onAddToCart(product: Product): void {

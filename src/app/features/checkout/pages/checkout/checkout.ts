@@ -32,8 +32,13 @@ export class Checkout {
   });
 
   submitOrder(): void {
+    this.checkoutForm.markAllAsTouched();
+    this.checkoutForm.updateValueAndValidity();
+
     if (this.checkoutForm.invalid) {
-      this.checkoutForm.markAllAsTouched();
+      this.logInvalidControls();
+      this.focusFirstInvalidControl();
+
       return;
     }
 
@@ -41,14 +46,37 @@ export class Checkout {
       return;
     }
 
-    console.log({
+    const order = {
       customer: this.checkoutForm.getRawValue(),
       items: this.cartService.items(),
       total: this.cartService.totalPrice(),
-    });
+    };
 
     this.cartService.clearCart();
 
     this.orderSubmitted.set(true);
+  }
+
+  private logInvalidControls(): void {
+    Object.entries(this.checkoutForm.controls).forEach(([name, control]) => {
+      if (control.invalid) {
+        console.log(`Invalid control: ${name}`, {
+          value: control.value,
+          errors: control.errors,
+        });
+      }
+    });
+  }
+
+  private focusFirstInvalidControl(): void {
+    setTimeout(() => {
+      const firstInvalidElement = document.querySelector<HTMLElement>('.checkout-form .ng-invalid');
+
+      firstInvalidElement?.focus();
+      firstInvalidElement?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    });
   }
 }
