@@ -1,0 +1,158 @@
+<section class="product-details-page">
+  <div class="container">
+    @if (product(); as product) {
+      <nav class="breadcrumb">
+        <a routerLink="/"> الرئيسية </a>
+
+        <span>/</span>
+
+        <a routerLink="/products"> المنتجات </a>
+
+        <span>/</span>
+
+        <strong>
+          {{ product.nameAr }}
+        </strong>
+      </nav>
+
+      <div class="product-details">
+        <div class="product-details__visual">
+          <div class="product-details__image">
+            <img [src]="product.image" [alt]="product.nameAr" />
+
+            <span class="product-details__code">
+              {{ product.code }}
+            </span>
+          </div>
+        </div>
+
+        <div class="product-details__content">
+          <span class="product-details__category">
+            {{ product.category }}
+          </span>
+
+          <h1>
+            {{ product.nameAr }}
+          </h1>
+
+          <p class="product-details__name-en">
+            {{ product.nameEn }}
+          </p>
+
+          <div class="product-details__divider"></div>
+
+          <p class="product-details__description">
+            {{ product.description }}
+          </p>
+
+          <div class="product-details__price">
+            <strong>
+              {{ product.price }}
+
+              <span> ر.س </span>
+            </strong>
+
+            @if (product.isDemoPrice) {
+              <small> سعر تجريبي لأغراض عرض النموذج </small>
+            }
+          </div>
+
+          <div class="product-details__purchase">
+            <div class="product-details__quantity">
+              <span class="product-details__quantity-label"> الكمية </span>
+
+              <div class="quantity-selector">
+                <button type="button" aria-label="تقليل الكمية" (click)="decreaseQuantity()">
+                  -
+                </button>
+
+                <strong>
+                  {{ quantity() }}
+                </strong>
+
+                <button type="button" aria-label="زيادة الكمية" (click)="increaseQuantity()">
+                  +
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="product-details__add"
+              [class.product-details__add--added]="added()"
+              (click)="addToCart()"
+            >
+              @if (added()) {
+                <span> ✓ </span>
+
+                تمت الإضافة إلى السلة
+              } @else {
+                أضف إلى السلة
+
+                <span> ← </span>
+              }
+            </button>
+          </div>
+
+          <div class="product-details__info">
+            <div class="product-details__info-item">
+              <div class="product-details__info-icon">✓</div>
+
+              <div>
+                <strong> تحضير بعناية </strong>
+
+                <span> منتجات مختارة لتناسب مختلف المناسبات. </span>
+              </div>
+            </div>
+
+            <div class="product-details__info-item">
+              <div class="product-details__info-icon">✎</div>
+
+              <div>
+                <strong> ملاحظات خاصة بالطلب </strong>
+
+                <span> يمكنك إضافة ملاحظتك الخاصة عند إتمام الطلب. </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      @if (relatedProducts().length > 0) {
+        <section class="related-products">
+          <div class="related-products__heading">
+            <div>
+              <span> قد يعجبك أيضًا </span>
+
+              <h2>منتجات مشابهة</h2>
+            </div>
+
+            <a routerLink="/products">
+              عرض جميع المنتجات
+              <span>←</span>
+            </a>
+          </div>
+
+          <div class="related-products__grid">
+            @for (relatedProduct of relatedProducts(); track relatedProduct.id) {
+              <app-product-card
+                [product]="relatedProduct"
+                (addToCart)="addRelatedProduct($event)"
+              />
+            }
+          </div>
+        </section>
+      }
+    } @else {
+      <div class="product-not-found">
+        <span> 404 </span>
+
+        <h1>المنتج غير موجود</h1>
+
+        <p>يبدو أن المنتج الذي تبحث عنه غير متوفر.</p>
+
+        <a routerLink="/products"> العودة إلى المنتجات </a>
+      </div>
+    }
+  </div>
+</section>

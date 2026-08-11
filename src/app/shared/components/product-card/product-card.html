@@ -1,0 +1,50 @@
+<article class="product-card">
+  <a [routerLink]="['/products', product().id]" class="product-card__image-wrapper">
+    <img [src]="product().image" [alt]="product().nameAr" class="product-card__image" />
+
+    <span class="product-card__code">
+      {{ product().code }}
+    </span>
+  </a>
+
+  <div class="product-card__content">
+    <div class="product-card__category">
+      {{ product().category }}
+    </div>
+
+    <a [routerLink]="['/products', product().id]" class="product-card__title">
+      {{ product().nameAr }}
+    </a>
+
+    <p class="product-card__name-en">
+      {{ product().nameEn }}
+    </p>
+
+    <div class="product-card__footer">
+      <div class="product-card__price">
+        <strong>
+          {{ product().price }}
+          <span>ر.س</span>
+        </strong>
+
+        @if (product().isDemoPrice) {
+          <small>سعر تجريبي</small>
+        }
+      </div>
+
+      <button
+        type="button"
+        class="product-card__add"
+        [class.product-card__add--added]="added()"
+        [attr.aria-label]="added() ? 'تمت الإضافة إلى السلة' : 'إضافة إلى السلة'"
+        (click)="onAddToCart()"
+      >
+        @if (added()) {
+          ✓
+        } @else {
+          +
+        }
+      </button>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,229 @@
+<section class="hero">
+  <div class="container hero__container">
+    <div class="hero__content">
+      <span class="hero__eyebrow"> لمسات حلوة لكل مناسبة </span>
+
+      <h1 class="hero__title">
+        لأن كل لحظة
+        <span>تستحق مذاقًا مميزًا</span>
+      </h1>
+
+      <p class="hero__description">
+        اكتشف تشكيلة مختارة من الكيك والحلويات المُحضّرة بعناية لتكون جزءًا من أجمل لحظاتكم.
+      </p>
+
+      <div class="hero__actions">
+        <a routerLink="/products" class="btn btn--primary">
+          اكتشف منتجاتنا
+
+          <svg viewBox="0 0 24 24">
+            <path d="M19 12H5" />
+            <path d="m12 19-7-7 7-7" />
+          </svg>
+        </a>
+
+        <a href="#featured" class="btn btn--secondary"> الأكثر طلبًا </a>
+      </div>
+
+      <div class="hero__features">
+        <div class="hero__feature">
+          <span>01</span>
+          <p>منتجات مختارة بعناية</p>
+        </div>
+
+        <div class="hero__feature">
+          <span>02</span>
+          <p>طلب سريع وسهل</p>
+        </div>
+
+        <div class="hero__feature">
+          <span>03</span>
+          <p>مناسب لكل المناسبات</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <div class="hero__image-wrapper">
+        <img src="/images/hero-cake.png" alt="كيك من Touché de Gateau" class="hero__image" />
+
+        <div class="hero__badge">
+          <span>Touché</span>
+          <small>لحظات بطعم أجمل</small>
+        </div>
+      </div>
+
+      <div class="hero__shape hero__shape--one"></div>
+      <div class="hero__shape hero__shape--two"></div>
+    </div>
+  </div>
+</section>
+
+<section class="categories">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <span class="section-heading__eyebrow"> اكتشف تشكيلتنا </span>
+
+        <h2>اختر ما يناسب لحظتك</h2>
+      </div>
+
+      <a routerLink="/products" class="section-heading__link">
+        عرض جميع المنتجات
+        <span>←</span>
+      </a>
+    </div>
+
+    <div class="categories__grid">
+      <a routerLink="/products" class="category-card category-card--large">
+        <div class="category-card__image">
+          <img src="/images/categories/cakes.jpg" alt="الكيك" />
+        </div>
+
+        <div class="category-card__overlay"></div>
+
+        <div class="category-card__content">
+          <span>01</span>
+          <h3>الكيك</h3>
+          <p>تشكيلة متنوعة لكل مناسبة</p>
+
+          <div class="category-card__arrow">←</div>
+        </div>
+      </a>
+
+      <a routerLink="/products" class="category-card">
+        <div class="category-card__image">
+          <img src="/images/categories/cheesecake.jpg" alt="التشيز كيك" />
+        </div>
+
+        <div class="category-card__overlay"></div>
+
+        <div class="category-card__content">
+          <span>02</span>
+          <h3>التشيز كيك</h3>
+          <p>نكهات خفيفة وغنية</p>
+
+          <div class="category-card__arrow">←</div>
+        </div>
+      </a>
+
+      <a routerLink="/products" class="category-card">
+        <div class="category-card__image">
+          <img src="/images/categories/mini-desserts.jpg" alt="الحلويات الصغيرة" />
+        </div>
+
+        <div class="category-card__overlay"></div>
+
+        <div class="category-card__content">
+          <span>03</span>
+          <h3>الحلويات الصغيرة</h3>
+          <p>تفاصيل صغيرة بطعم مميز</p>
+
+          <div class="category-card__arrow">←</div>
+        </div>
+      </a>
+
+      <a routerLink="/products" class="category-card category-card--wide">
+        <div class="category-card__image">
+          <img src="/images/categories/bakery.jpg" alt="المخبوزات" />
+        </div>
+
+        <div class="category-card__overlay"></div>
+
+        <div class="category-card__content">
+          <span>04</span>
+          <h3>المخبوزات والحلويات</h3>
+          <p>كوكيز، براونيز ومخبوزات مختارة</p>
+
+          <div class="category-card__arrow">←</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="featured-products" id="featured">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <span class="section-heading__eyebrow"> مختاراتنا </span>
+
+        <h2>منتجات تستحق التجربة</h2>
+      </div>
+
+      <a routerLink="/products" class="section-heading__link">
+        اكتشف جميع المنتجات
+        <span>←</span>
+      </a>
+    </div>
+
+    <div class="featured-products__grid">
+      @for (product of featuredProducts; track product.id) {
+        <app-product-card [product]="product" (addToCart)="onAddToCart($event)" />
+      }
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container about__container">
+    <div class="about__image">
+      <img src="/images/categories/bakery.jpg" alt="Touché de Gateau" />
+
+      <span class="about__badge"> TOUCHÉ DE GATEAU </span>
+    </div>
+
+    <div class="about__content">
+      <span class="about__eyebrow"> قصتنا </span>
+
+      <h2>
+        أكثر من مجرد
+        <span>قطعة حلوى</span>
+      </h2>
+
+      <p>
+        في Touché de Gateau نؤمن أن الحلوى جزء من اللحظات التي نتذكرها. لذلك نهتم بالتفاصيل لنقدم
+        تجربة تناسب مناسباتكم ولحظاتكم الخاصة.
+      </p>
+
+      <div class="about__features">
+        <div>
+          <strong>01</strong>
+          <span>اهتمام بالتفاصيل</span>
+        </div>
+
+        <div>
+          <strong>02</strong>
+          <span>تشكيلة متنوعة</span>
+        </div>
+
+        <div>
+          <strong>03</strong>
+          <span>تجربة طلب سهلة</span>
+        </div>
+      </div>
+
+      <a routerLink="/products" class="about__link">
+        اكتشف تشكيلتنا
+        <span>←</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="home-cta" id="contact">
+  <div class="container">
+    <div class="home-cta__box">
+      <span class="home-cta__eyebrow"> اختر لحظتك </span>
+
+      <h2>شيء مميز لكل مناسبة</h2>
+
+      <p>اختر ما يناسبك من تشكيلتنا وأضف تفاصيل طلبك، ونحن نتولى الباقي.</p>
+
+      <a routerLink="/products">
+        ابدأ طلبك
+        <span>←</span>
+      </a>
+    </div>
+  </div>
+</section>

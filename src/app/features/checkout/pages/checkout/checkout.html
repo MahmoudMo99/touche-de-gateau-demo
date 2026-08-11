@@ -1,0 +1,281 @@
+<section class="checkout-page">
+  <div class="container">
+    @if (orderSubmitted()) {
+      <div class="order-success">
+        <div class="order-success__icon">✓</div>
+
+        <span> تم استلام طلبك </span>
+
+        <h1>شكرًا لاختيارك Touché</h1>
+
+        <p>تم تسجيل طلبك بنجاح، وسيتم التواصل معك لتأكيد التفاصيل وموعد التوصيل.</p>
+
+        <div class="order-success__number">
+          <span>رقم الطلب</span>
+          <strong>#TDG-1024</strong>
+        </div>
+
+        <a routerLink="/" class="order-success__button">
+          العودة للرئيسية
+          <span>←</span>
+        </a>
+      </div>
+    } @else if (cartService.items().length === 0) {
+      <div class="checkout-empty">
+        <h1>لا توجد منتجات لإتمام الطلب</h1>
+
+        <p>أضف بعض المنتجات إلى السلة أولًا.</p>
+
+        <a routerLink="/products"> تصفح المنتجات </a>
+      </div>
+    } @else {
+      <div class="checkout-header">
+        <span class="checkout-header__eyebrow"> الخطوة الأخيرة </span>
+
+        <h1>إتمام الطلب</h1>
+
+        <p>أدخل بياناتك وسنتولى الباقي.</p>
+      </div>
+
+      <div class="checkout-layout">
+        <form class="checkout-form" [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
+          <section class="checkout-section">
+            <div class="checkout-section__header">
+              <span>01</span>
+
+              <div>
+                <h2>بيانات العميل</h2>
+
+                <p>البيانات الأساسية للتواصل معك.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="fullName"> الاسم الكامل </label>
+
+                <input
+                  id="fullName"
+                  type="text"
+                  formControlName="fullName"
+                  placeholder="اكتب اسمك الكامل"
+                />
+
+                @if (
+                  checkoutForm.controls.fullName.touched && checkoutForm.controls.fullName.invalid
+                ) {
+                  <small class="form-error"> يرجى إدخال الاسم بشكل صحيح. </small>
+                }
+              </div>
+
+              <div class="form-field">
+                <label for="phone"> رقم الجوال </label>
+
+                <input
+                  id="phone"
+                  type="tel"
+                  formControlName="phone"
+                  placeholder="+966566387733"
+                  maxlength="13"
+                  dir="ltr"
+                />
+
+                @if (checkoutForm.controls.phone.touched && checkoutForm.controls.phone.invalid) {
+                  <small class="form-error">
+                    يرجى إدخال رقم جوال سعودي صحيح مثل +966566387733.
+                  </small>
+                }
+              </div>
+            </div>
+          </section>
+
+          <section class="checkout-section">
+            <div class="checkout-section__header">
+              <span>02</span>
+
+              <div>
+                <h2>عنوان التوصيل</h2>
+
+                <p>أخبرنا أين تريد استلام طلبك.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="city"> المدينة </label>
+
+                <select id="city" formControlName="city">
+                  <option value="">اختر المدينة</option>
+
+                  <option value="riyadh">الرياض</option>
+
+                  <option value="jeddah">جدة</option>
+
+                  <option value="dammam">الدمام</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label for="address"> العنوان </label>
+
+                <input
+                  id="address"
+                  type="text"
+                  formControlName="address"
+                  placeholder="الحي، الشارع، رقم المبنى"
+                />
+              </div>
+            </div>
+          </section>
+
+          <!-- Notes -->
+          <section class="checkout-section">
+            <div class="checkout-section__header">
+              <span>03</span>
+
+              <div>
+                <h2>ملاحظات الطلب</h2>
+
+                <p>أضف أي تفاصيل تريد أن نعرفها عن طلبك.</p>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="notes">
+                ملاحظة
+                <span>اختياري</span>
+              </label>
+
+              <textarea
+                id="notes"
+                rows="5"
+                formControlName="notes"
+                placeholder="مثال: يُرجى كتابة كل عام وأنت بخير على الكيكة..."
+              ></textarea>
+            </div>
+          </section>
+
+          <!-- Payment -->
+          <section class="checkout-section">
+            <div class="checkout-section__header">
+              <span>04</span>
+
+              <div>
+                <h2>طريقة الدفع</h2>
+
+                <p>اختر الطريقة المناسبة لك.</p>
+              </div>
+            </div>
+
+            <div class="payment-options">
+              <label
+                class="payment-option"
+                [class.payment-option--active]="
+                  checkoutForm.controls.paymentMethod.value === 'cash'
+                "
+              >
+                <input type="radio" value="cash" formControlName="paymentMethod" />
+
+                <div class="payment-option__icon">﷼</div>
+
+                <div>
+                  <strong> الدفع عند الاستلام </strong>
+
+                  <span> ادفع قيمة الطلب عند وصوله. </span>
+                </div>
+              </label>
+
+              <label
+                class="payment-option"
+                [class.payment-option--active]="
+                  checkoutForm.controls.paymentMethod.value === 'online'
+                "
+              >
+                <input type="radio" value="online" formControlName="paymentMethod" />
+
+                <div class="payment-option__icon">◇</div>
+
+                <div>
+                  <strong> الدفع الإلكتروني </strong>
+
+                  <span> بطاقة بنكية أو وسائل الدفع الإلكترونية. </span>
+
+                  <small> عرض تجريبي </small>
+                </div>
+              </label>
+            </div>
+          </section>
+        </form>
+
+        <!-- Summary -->
+        <aside class="checkout-summary">
+          <span class="checkout-summary__eyebrow"> طلبك </span>
+
+          <h2>ملخص الطلب</h2>
+
+          <div class="checkout-summary__items">
+            @for (item of cartService.items(); track item.product.id) {
+              <div class="checkout-summary__item">
+                <div class="checkout-summary__image">
+                  <img [src]="item.product.image" [alt]="item.product.nameAr" />
+
+                  <span>
+                    {{ item.quantity }}
+                  </span>
+                </div>
+
+                <div class="checkout-summary__item-details">
+                  <strong>
+                    {{ item.product.nameAr }}
+                  </strong>
+
+                  <small>
+                    {{ item.product.code }}
+                  </small>
+                </div>
+
+                <span class="checkout-summary__price">
+                  {{ item.product.price * item.quantity }}
+                  ر.س
+                </span>
+              </div>
+            }
+          </div>
+
+          <div class="checkout-summary__details">
+            <div>
+              <span> المنتجات </span>
+
+              <strong>
+                {{ cartService.totalPrice() }}
+                ر.س
+              </strong>
+            </div>
+
+            <div>
+              <span> التوصيل </span>
+
+              <strong class="pending"> يحدد لاحقًا </strong>
+            </div>
+          </div>
+
+          <div class="checkout-summary__total">
+            <span> الإجمالي المبدئي </span>
+
+            <strong>
+              {{ cartService.totalPrice() }}
+              <small>ر.س</small>
+            </strong>
+          </div>
+
+          <button type="button" class="checkout-summary__submit" (click)="submitOrder()">
+            تأكيد الطلب
+            <span>←</span>
+          </button>
+
+          <p class="checkout-summary__note">هذا نموذج تجريبي، ولن يتم تنفيذ أي عملية دفع حقيقية.</p>
+        </aside>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,175 @@
+<section class="cart-page">
+  <div class="container">
+    <div class="cart-page__header">
+      <div>
+        <span class="cart-page__eyebrow"> طلبك </span>
+
+        <h1>سلة المشتريات</h1>
+
+        <p>راجع اختياراتك قبل إتمام الطلب.</p>
+      </div>
+
+      @if (cartService.totalItems() > 0) {
+        <span class="cart-page__count">
+          {{ cartService.totalItems() }}
+          منتج
+        </span>
+      }
+    </div>
+
+    @if (cartService.items().length === 0) {
+      <div class="empty-cart">
+        <div class="empty-cart__icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L20 8H6" />
+            <circle cx="10" cy="20" r="1" />
+            <circle cx="17" cy="20" r="1" />
+          </svg>
+        </div>
+
+        <h2>سلتك فارغة</h2>
+
+        <p>لم تضف أي منتجات بعد، اكتشف تشكيلتنا واختر ما يناسبك.</p>
+
+        <a routerLink="/products" class="empty-cart__button">
+          تصفح المنتجات
+          <span>←</span>
+        </a>
+      </div>
+    } @else {
+      <div class="cart-layout">
+        <!-- Products -->
+        <div class="cart-items">
+          @for (item of cartService.items(); track item.product.id) {
+            <article class="cart-item">
+              <a [routerLink]="['/products', item.product.id]" class="cart-item__image">
+                <img [src]="item.product.image" [alt]="item.product.nameAr" />
+              </a>
+
+              <div class="cart-item__details">
+                <div class="cart-item__top">
+                  <div>
+                    <span class="cart-item__code">
+                      {{ item.product.code }}
+                    </span>
+
+                    <a [routerLink]="['/products', item.product.id]" class="cart-item__title">
+                      {{ item.product.nameAr }}
+                    </a>
+
+                    <p class="cart-item__name-en">
+                      {{ item.product.nameEn }}
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="cart-item__remove"
+                    aria-label="حذف المنتج"
+                    (click)="removeProduct(item.product.id)"
+                  >
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 6h18" />
+                      <path d="M8 6V4h8v2" />
+                      <path d="M19 6l-1 14H6L5 6" />
+                      <path d="M10 11v5" />
+                      <path d="M14 11v5" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="cart-item__bottom">
+                  <div class="quantity-control">
+                    <button
+                      type="button"
+                      aria-label="تقليل الكمية"
+                      (click)="decreaseQuantity(item.product.id)"
+                    >
+                      −
+                    </button>
+
+                    <span>
+                      {{ item.quantity }}
+                    </span>
+
+                    <button
+                      type="button"
+                      aria-label="زيادة الكمية"
+                      (click)="increaseQuantity(item.product.id)"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <div class="cart-item__price">
+                    <span class="cart-item__unit-price">
+                      {{ item.product.price }}
+                      ر.س ×
+                      {{ item.quantity }}
+                    </span>
+
+                    <strong>
+                      {{ item.product.price * item.quantity }}
+                      <span>ر.س</span>
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+
+        <!-- Summary -->
+        <aside class="order-summary">
+          <span class="order-summary__eyebrow"> ملخص الطلب </span>
+
+          <h2>تفاصيل السلة</h2>
+
+          <div class="order-summary__rows">
+            <div class="order-summary__row">
+              <span> عدد المنتجات </span>
+
+              <strong>
+                {{ cartService.totalItems() }}
+              </strong>
+            </div>
+
+            <div class="order-summary__row">
+              <span> المنتجات </span>
+
+              <strong>
+                {{ cartService.totalPrice() }}
+                ر.س
+              </strong>
+            </div>
+
+            <div class="order-summary__row">
+              <span> التوصيل </span>
+
+              <span class="order-summary__pending"> يحدد لاحقًا </span>
+            </div>
+          </div>
+
+          <div class="order-summary__total">
+            <span> الإجمالي المبدئي </span>
+
+            <strong>
+              {{ cartService.totalPrice() }}
+              <small>ر.س</small>
+            </strong>
+          </div>
+
+          <p class="order-summary__note">الأسعار الحالية تجريبية لأغراض عرض النموذج فقط.</p>
+
+          <a routerLink="/checkout" class="order-summary__checkout">
+            إتمام الطلب
+
+            <span>←</span>
+          </a>
+
+          <a routerLink="/products" class="order-summary__continue"> متابعة التسوق </a>
+        </aside>
+      </div>
+    }
+  </div>
+</section>

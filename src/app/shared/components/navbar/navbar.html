@@ -1,0 +1,82 @@
+<header class="navbar">
+  <div class="container navbar__container">
+    <a routerLink="/" class="navbar__brand">
+      <span class="navbar__brand-main"> TOUCHÉ </span>
+
+      <span class="navbar__brand-sub"> DE GATEAU </span>
+    </a>
+
+    <nav class="navbar__links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        الرئيسية
+      </a>
+
+      <a routerLink="/products" routerLinkActive="active"> المنتجات </a>
+
+      <a href="#about"> من نحن </a>
+
+      <a href="#contact"> تواصل معنا </a>
+    </nav>
+
+    <div class="navbar__actions">
+      <div class="navbar__search-wrapper">
+        @if (searchOpened()) {
+          <div class="navbar__search">
+            <input
+              type="search"
+              placeholder="ابحث عن منتج..."
+              aria-label="البحث عن منتج"
+              [value]="searchValue()"
+              (input)="onSearchInput($event)"
+              (keyup.enter)="search()"
+            />
+
+            <button type="button" aria-label="تنفيذ البحث" (click)="search()">
+              <svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="7" />
+
+                <path d="m20 20-3.8-3.8" />
+              </svg>
+            </button>
+          </div>
+        }
+
+        <button
+          class="navbar__icon-button"
+          type="button"
+          [attr.aria-label]="searchOpened() ? 'إغلاق البحث' : 'فتح البحث'"
+          (click)="toggleSearch()"
+        >
+          @if (searchOpened()) {
+            <svg viewBox="0 0 24 24">
+              <path d="M6 6l12 12" />
+              <path d="M18 6L6 18" />
+            </svg>
+          } @else {
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="7" />
+
+              <path d="m20 20-3.8-3.8" />
+            </svg>
+          }
+        </button>
+      </div>
+
+      <a routerLink="/cart" class="navbar__icon-button navbar__cart" aria-label="السلة">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L20 8H6" />
+
+          <circle cx="10" cy="20" r="1" />
+
+          <circle cx="17" cy="20" r="1" />
+        </svg>
+
+        @if (cartService.totalItems() > 0) {
+          <span class="navbar__cart-count">
+            {{ cartService.totalItems() }}
+          </span>
+        }
+      </a>
+    </div>
+  </div>
+</header>
