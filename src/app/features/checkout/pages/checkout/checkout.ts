@@ -1,33 +1,63 @@
-import { Component, inject, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import {
+  LucideArrowLeft,
+  LucideBanknote,
+  LucideCheck,
+  LucideClipboardList,
+  LucideCreditCard,
+  LucideHome,
+  LucideMapPin,
+  LucideShoppingBag,
+  LucideShoppingCart,
+  LucideSparkles,
+  LucideTruck,
+  LucideUser,
+} from '@lucide/angular';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 import { CartService } from '../../../../core/services/cart.service';
 
 @Component({
   selector: 'app-checkout',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    LucideArrowLeft,
+    LucideBanknote,
+    LucideCheck,
+    LucideClipboardList,
+    LucideCreditCard,
+    LucideHome,
+    LucideMapPin,
+    LucideShoppingBag,
+    LucideShoppingCart,
+    LucideSparkles,
+    LucideTruck,
+    LucideUser,
+  ],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Checkout {
   private readonly fb = inject(FormBuilder);
+  private readonly document = inject(DOCUMENT);
+  private readonly toastService = inject(HotToastService);
 
   readonly cartService = inject(CartService);
 
   readonly orderSubmitted = signal(false);
+  readonly orderNumber = signal('');
 
   readonly checkoutForm = this.fb.nonNullable.group({
     fullName: ['', [Validators.required, Validators.minLength(3)]],
-
-    phone: ['', [Validators.required, Validators.pattern(/^\+9665\d{8}$/)]],
-
+    phone: ['', [Validators.required, Validators.pattern(/^(\+9665\d{8}|05\d{8})$/)]],
     city: ['', Validators.required],
-
     address: ['', [Validators.required, Validators.minLength(8)]],
-
     notes: [''],
-
     paymentMethod: ['cash', Validators.required],
   });
 
@@ -36,46 +66,48 @@ export class Checkout {
     this.checkoutForm.updateValueAndValidity();
 
     if (this.checkoutForm.invalid) {
-      this.logInvalidControls();
+      this.toastService.error('يرجى مراجعة البيانات المطلوبة قبل تأكيد الطلب');
       this.focusFirstInvalidControl();
-
       return;
     }
 
     if (this.cartService.items().length === 0) {
+      this.toastService.error('السلة فارغة، أضف منتجات أولًا');
       return;
     }
 
-    const order = {
-      customer: this.checkoutForm.getRawValue(),
-      items: this.cartService.items(),
-      total: this.cartService.totalPrice(),
-    };
-
+    this.orderNumber.set(this.generateOrderNumber());
     this.cartService.clearCart();
-
     this.orderSubmitted.set(true);
+    this.toastService.success('تم تسجيل الطلب التجريبي بنجاح');
+    this.scrollToTop();
   }
 
-  private logInvalidControls(): void {
-    Object.entries(this.checkoutForm.controls).forEach(([name, control]) => {
-      if (control.invalid) {
-        console.log(`Invalid control: ${name}`, {
-          value: control.value,
-          errors: control.errors,
-        });
-      }
-    });
+  private generateOrderNumber(): string {
+    const randomPart = Math.floor(1000 + Math.random() * 9000);
+
+    return `#TDG-${randomPart}`;
   }
 
   private focusFirstInvalidControl(): void {
     setTimeout(() => {
-      const firstInvalidElement = document.querySelector<HTMLElement>('.checkout-form .ng-invalid');
+      const firstInvalidElement = this.document.querySelector<HTMLElement>(
+        '.checkout-form .ng-invalid',
+      );
 
       firstInvalidElement?.focus();
       firstInvalidElement?.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
+      });
+    });
+  }
+
+  private scrollToTop(): void {
+    setTimeout(() => {
+      this.document.defaultView?.scrollTo({
+        top: 0,
+        behavior: 'smooth',
       });
     });
   }

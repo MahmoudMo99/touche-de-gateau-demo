@@ -2,40 +2,63 @@
   <div class="container">
     @if (orderSubmitted()) {
       <div class="order-success">
-        <div class="order-success__icon">✓</div>
+        <div class="order-success__icon">
+          <svg lucideCheck aria-hidden="true"></svg>
+        </div>
 
-        <span> تم استلام طلبك </span>
+        <span>تم استلام الطلب</span>
 
         <h1>شكرًا لاختيارك Touché</h1>
 
-        <p>تم تسجيل طلبك بنجاح، وسيتم التواصل معك لتأكيد التفاصيل وموعد التوصيل.</p>
+        <p>
+          تم تسجيل الطلب داخل النموذج التجريبي بنجاح. في النسخة الحقيقية يمكن ربط هذه الخطوة بواتساب
+          أو لوحة تحكم أو بوابة دفع.
+        </p>
 
         <div class="order-success__number">
-          <span> رقم الطلب </span>
-
-          <strong> #TDG-1024 </strong>
+          <span>رقم الطلب التجريبي</span>
+          <strong>{{ orderNumber() }}</strong>
         </div>
 
-        <a routerLink="/" class="order-success__button">
-          العودة للرئيسية
-          <span>←</span>
-        </a>
+        <div class="order-success__actions">
+          <a routerLink="/" class="order-success__button">
+            <svg lucideHome aria-hidden="true"></svg>
+            <span>العودة للرئيسية</span>
+          </a>
+
+          <a routerLink="/products" class="order-success__button order-success__button--light">
+            <span>تصفح منتجات أخرى</span>
+            <svg lucideArrowLeft aria-hidden="true"></svg>
+          </a>
+        </div>
       </div>
     } @else if (cartService.items().length === 0) {
       <div class="checkout-empty">
+        <div class="checkout-empty__icon">
+          <svg lucideShoppingCart aria-hidden="true"></svg>
+        </div>
+
+        <span>السلة فارغة</span>
+
         <h1>لا توجد منتجات لإتمام الطلب</h1>
 
-        <p>أضف بعض المنتجات إلى السلة أولًا.</p>
+        <p>أضف بعض المنتجات إلى السلة أولًا، ثم ارجع لإكمال بيانات الطلب.</p>
 
-        <a routerLink="/products"> تصفح المنتجات </a>
+        <a routerLink="/products">
+          <span>تصفح المنتجات</span>
+          <svg lucideArrowLeft aria-hidden="true"></svg>
+        </a>
       </div>
     } @else {
       <div class="checkout-header">
-        <span class="checkout-header__eyebrow"> الخطوة الأخيرة </span>
+        <span class="checkout-header__eyebrow">
+          <svg lucideSparkles aria-hidden="true"></svg>
+          الخطوة الأخيرة
+        </span>
 
         <h1>إتمام الطلب</h1>
 
-        <p>أدخل بياناتك وسنتولى الباقي.</p>
+        <p>أدخل بيانات التواصل والتوصيل، ثم راجع ملخص الطلب قبل التأكيد.</p>
       </div>
 
       <div class="checkout-layout">
@@ -47,18 +70,21 @@
         >
           <section class="checkout-section">
             <div class="checkout-section__header">
-              <span> 01 </span>
+              <span>01</span>
 
               <div>
-                <h2>بيانات العميل</h2>
+                <h2>
+                  <svg lucideUser aria-hidden="true"></svg>
+                  بيانات العميل
+                </h2>
 
-                <p>البيانات الأساسية للتواصل معك.</p>
+                <p>اكتب بيانات التواصل الأساسية لتأكيد الطلب.</p>
               </div>
             </div>
 
             <div class="form-grid">
               <div class="form-field">
-                <label for="fullName"> الاسم الكامل </label>
+                <label for="fullName">الاسم الكامل</label>
 
                 <input
                   id="fullName"
@@ -72,25 +98,25 @@
                   checkoutForm.controls.fullName.touched &&
                   checkoutForm.controls.fullName.hasError('required')
                 ) {
-                  <small class="form-error"> الاسم مطلوب. </small>
+                  <small class="form-error">الاسم مطلوب.</small>
                 }
 
                 @if (
                   checkoutForm.controls.fullName.touched &&
                   checkoutForm.controls.fullName.hasError('minlength')
                 ) {
-                  <small class="form-error"> الاسم يجب أن يكون 3 أحرف على الأقل. </small>
+                  <small class="form-error">الاسم يجب أن يكون 3 أحرف على الأقل.</small>
                 }
               </div>
 
               <div class="form-field">
-                <label for="phone"> رقم الجوال </label>
+                <label for="phone">رقم الجوال</label>
 
                 <input
                   id="phone"
                   type="tel"
                   formControlName="phone"
-                  placeholder="+966566387733"
+                  placeholder="+966500000000"
                   maxlength="13"
                   autocomplete="tel"
                   dir="ltr"
@@ -100,7 +126,7 @@
                   checkoutForm.controls.phone.touched &&
                   checkoutForm.controls.phone.hasError('required')
                 ) {
-                  <small class="form-error"> رقم الجوال مطلوب. </small>
+                  <small class="form-error">رقم الجوال مطلوب.</small>
                 }
 
                 @if (
@@ -108,7 +134,7 @@
                   checkoutForm.controls.phone.hasError('pattern')
                 ) {
                   <small class="form-error">
-                    يرجى إدخال رقم جوال سعودي صحيح مثل +966566387733.
+                    يرجى إدخال رقم سعودي صحيح مثل +966500000000 أو 0500000000.
                   </small>
                 }
               </div>
@@ -117,26 +143,26 @@
 
           <section class="checkout-section">
             <div class="checkout-section__header">
-              <span> 02 </span>
+              <span>02</span>
 
               <div>
-                <h2>عنوان التوصيل</h2>
+                <h2>
+                  <svg lucideMapPin aria-hidden="true"></svg>
+                  عنوان التوصيل
+                </h2>
 
-                <p>أخبرنا أين تريد استلام طلبك.</p>
+                <p>حدد المدينة والعنوان لتجهيز تفاصيل التوصيل.</p>
               </div>
             </div>
 
             <div class="form-grid">
               <div class="form-field">
-                <label for="city"> المدينة </label>
+                <label for="city">المدينة</label>
 
                 <select id="city" formControlName="city">
                   <option value="">اختر المدينة</option>
-
                   <option value="riyadh">الرياض</option>
-
                   <option value="jeddah">جدة</option>
-
                   <option value="dammam">الدمام</option>
                 </select>
 
@@ -144,12 +170,12 @@
                   checkoutForm.controls.city.touched &&
                   checkoutForm.controls.city.hasError('required')
                 ) {
-                  <small class="form-error"> يرجى اختيار المدينة. </small>
+                  <small class="form-error">يرجى اختيار المدينة.</small>
                 }
               </div>
 
               <div class="form-field">
-                <label for="address"> العنوان </label>
+                <label for="address">العنوان</label>
 
                 <input
                   id="address"
@@ -163,14 +189,14 @@
                   checkoutForm.controls.address.touched &&
                   checkoutForm.controls.address.hasError('required')
                 ) {
-                  <small class="form-error"> العنوان مطلوب. </small>
+                  <small class="form-error">العنوان مطلوب.</small>
                 }
 
                 @if (
                   checkoutForm.controls.address.touched &&
                   checkoutForm.controls.address.hasError('minlength')
                 ) {
-                  <small class="form-error"> يرجى كتابة عنوان أكثر تفصيلًا. </small>
+                  <small class="form-error">يرجى كتابة عنوان أكثر تفصيلًا.</small>
                 }
               </div>
             </div>
@@ -178,38 +204,44 @@
 
           <section class="checkout-section">
             <div class="checkout-section__header">
-              <span> 03 </span>
+              <span>03</span>
 
               <div>
-                <h2>ملاحظات الطلب</h2>
+                <h2>
+                  <svg lucideClipboardList aria-hidden="true"></svg>
+                  ملاحظات الطلب
+                </h2>
 
-                <p>أضف أي تفاصيل تريد أن نعرفها عن طلبك.</p>
+                <p>أضف أي تفاصيل خاصة بالتجهيز أو المناسبة.</p>
               </div>
             </div>
 
             <div class="form-field">
               <label for="notes">
                 ملاحظة
-                <span> اختياري </span>
+                <span>اختياري</span>
               </label>
 
               <textarea
                 id="notes"
                 rows="5"
                 formControlName="notes"
-                placeholder="مثال: يُرجى كتابة كل عام وأنت بخير على الكيكة..."
+                placeholder="مثال: يُرجى كتابة عبارة تهنئة على الكيكة..."
               ></textarea>
             </div>
           </section>
 
           <section class="checkout-section">
             <div class="checkout-section__header">
-              <span> 04 </span>
+              <span>04</span>
 
               <div>
-                <h2>طريقة الدفع</h2>
+                <h2>
+                  <svg lucideCreditCard aria-hidden="true"></svg>
+                  طريقة الدفع
+                </h2>
 
-                <p>اختر الطريقة المناسبة لك.</p>
+                <p>اختر طريقة الدفع المناسبة لك.</p>
               </div>
             </div>
 
@@ -222,12 +254,13 @@
               >
                 <input type="radio" value="cash" formControlName="paymentMethod" />
 
-                <div class="payment-option__icon">﷼</div>
+                <div class="payment-option__icon">
+                  <svg lucideBanknote aria-hidden="true"></svg>
+                </div>
 
                 <div>
-                  <strong> الدفع عند الاستلام </strong>
-
-                  <span> ادفع قيمة الطلب عند وصوله. </span>
+                  <strong>الدفع عند الاستلام</strong>
+                  <span>ادفع قيمة الطلب عند وصوله.</span>
                 </div>
               </label>
 
@@ -239,14 +272,14 @@
               >
                 <input type="radio" value="online" formControlName="paymentMethod" />
 
-                <div class="payment-option__icon">◇</div>
+                <div class="payment-option__icon">
+                  <svg lucideCreditCard aria-hidden="true"></svg>
+                </div>
 
                 <div>
-                  <strong> الدفع الإلكتروني </strong>
-
-                  <span> بطاقة بنكية أو وسائل الدفع الإلكترونية. </span>
-
-                  <small> عرض تجريبي </small>
+                  <strong>الدفع الإلكتروني</strong>
+                  <span>بطاقة بنكية أو وسائل الدفع الإلكترونية.</span>
+                  <small>عرض تجريبي</small>
                 </div>
               </label>
             </div>
@@ -255,13 +288,16 @@
               checkoutForm.controls.paymentMethod.touched &&
               checkoutForm.controls.paymentMethod.invalid
             ) {
-              <small class="form-error"> يرجى اختيار طريقة الدفع. </small>
+              <small class="form-error">يرجى اختيار طريقة الدفع.</small>
             }
           </section>
         </form>
 
         <aside class="checkout-summary">
-          <span class="checkout-summary__eyebrow"> طلبك </span>
+          <span class="checkout-summary__eyebrow">
+            <svg lucideShoppingBag aria-hidden="true"></svg>
+            طلبك
+          </span>
 
           <h2>ملخص الطلب</h2>
 
@@ -277,13 +313,8 @@
                 </div>
 
                 <div class="checkout-summary__item-details">
-                  <strong>
-                    {{ item.product.nameAr }}
-                  </strong>
-
-                  <small>
-                    {{ item.product.code }}
-                  </small>
+                  <strong>{{ item.product.nameAr }}</strong>
+                  <small>{{ item.product.code }}</small>
                 </div>
 
                 <span class="checkout-summary__price">
@@ -296,7 +327,7 @@
 
           <div class="checkout-summary__details">
             <div>
-              <span> المنتجات </span>
+              <span>المنتجات</span>
 
               <strong>
                 {{ cartService.totalPrice() }}
@@ -305,28 +336,32 @@
             </div>
 
             <div>
-              <span> التوصيل </span>
+              <span>التوصيل</span>
 
-              <strong class="pending"> يحدد لاحقًا </strong>
+              <strong class="pending">
+                <svg lucideTruck aria-hidden="true"></svg>
+                يحدد لاحقًا
+              </strong>
             </div>
           </div>
 
           <div class="checkout-summary__total">
-            <span> الإجمالي المبدئي </span>
+            <span>الإجمالي المبدئي</span>
 
             <strong>
               {{ cartService.totalPrice() }}
-
-              <small> ر.س </small>
+              <small>ر.س</small>
             </strong>
           </div>
 
           <button type="submit" form="checkoutForm" class="checkout-summary__submit">
-            تأكيد الطلب
-            <span>←</span>
+            <span>تأكيد الطلب</span>
+            <svg lucideArrowLeft aria-hidden="true"></svg>
           </button>
 
-          <p class="checkout-summary__note">هذا نموذج تجريبي، ولن يتم تنفيذ أي عملية دفع حقيقية.</p>
+          <p class="checkout-summary__note">
+            هذا نموذج تجريبي، ولن يتم تنفيذ أي عملية دفع أو إرسال طلب حقيقي.
+          </p>
         </aside>
       </div>
     }

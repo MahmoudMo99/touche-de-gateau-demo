@@ -1,18 +1,22 @@
 <section class="product-details-page">
   <div class="container">
     @if (product(); as product) {
-      <nav class="breadcrumb">
-        <a routerLink="/"> الرئيسية </a>
+      <nav class="breadcrumb" aria-label="مسار الصفحة">
+        <a routerLink="/">
+          <svg lucideHome aria-hidden="true"></svg>
+          <span>الرئيسية</span>
+        </a>
 
         <span>/</span>
 
-        <a routerLink="/products"> المنتجات </a>
+        <a routerLink="/products">
+          <svg lucidePackage aria-hidden="true"></svg>
+          <span>المنتجات</span>
+        </a>
 
         <span>/</span>
 
-        <strong>
-          {{ product.nameAr }}
-        </strong>
+        <strong>{{ product.nameAr }}</strong>
       </nav>
 
       <div class="product-details">
@@ -21,6 +25,7 @@
             <img [src]="product.image" [alt]="product.nameAr" />
 
             <span class="product-details__code">
+              <svg lucideCakeSlice aria-hidden="true"></svg>
               {{ product.code }}
             </span>
           </div>
@@ -28,12 +33,11 @@
 
         <div class="product-details__content">
           <span class="product-details__category">
+            <svg lucideSparkles aria-hidden="true"></svg>
             {{ product.category }}
           </span>
 
-          <h1>
-            {{ product.nameAr }}
-          </h1>
+          <h1>{{ product.nameAr }}</h1>
 
           <p class="product-details__name-en">
             {{ product.nameEn }}
@@ -48,30 +52,27 @@
           <div class="product-details__price">
             <strong>
               {{ product.price }}
-
-              <span> ر.س </span>
+              <span>ر.س</span>
             </strong>
 
             @if (product.isDemoPrice) {
-              <small> سعر تجريبي لأغراض عرض النموذج </small>
+              <small>السعر المعروض تجريبي وقد يختلف حسب الطلب.</small>
             }
           </div>
 
           <div class="product-details__purchase">
             <div class="product-details__quantity">
-              <span class="product-details__quantity-label"> الكمية </span>
+              <span class="product-details__quantity-label">الكمية</span>
 
               <div class="quantity-selector">
                 <button type="button" aria-label="تقليل الكمية" (click)="decreaseQuantity()">
-                  -
+                  <svg lucideMinus aria-hidden="true"></svg>
                 </button>
 
-                <strong>
-                  {{ quantity() }}
-                </strong>
+                <strong>{{ quantity() }}</strong>
 
                 <button type="button" aria-label="زيادة الكمية" (click)="increaseQuantity()">
-                  +
+                  <svg lucidePlus aria-hidden="true"></svg>
                 </button>
               </div>
             </div>
@@ -83,35 +84,35 @@
               (click)="addToCart()"
             >
               @if (added()) {
-                <span> ✓ </span>
-
-                تمت الإضافة إلى السلة
+                <svg lucideCheck aria-hidden="true"></svg>
+                <span>تمت الإضافة إلى السلة</span>
               } @else {
-                أضف إلى السلة
-
-                <span> ← </span>
+                <svg lucideShoppingCart aria-hidden="true"></svg>
+                <span>أضف إلى السلة</span>
               }
             </button>
           </div>
 
           <div class="product-details__info">
             <div class="product-details__info-item">
-              <div class="product-details__info-icon">✓</div>
+              <div class="product-details__info-icon">
+                <svg lucideBadgeCheck aria-hidden="true"></svg>
+              </div>
 
               <div>
-                <strong> تحضير بعناية </strong>
-
-                <span> منتجات مختارة لتناسب مختلف المناسبات. </span>
+                <strong>اختيار مناسب للمناسبات</strong>
+                <span>منتجات بتفاصيل أنيقة تناسب الاحتفالات والضيافة.</span>
               </div>
             </div>
 
             <div class="product-details__info-item">
-              <div class="product-details__info-icon">✎</div>
+              <div class="product-details__info-icon">
+                <svg lucideInfo aria-hidden="true"></svg>
+              </div>
 
               <div>
-                <strong> ملاحظات خاصة بالطلب </strong>
-
-                <span> يمكنك إضافة ملاحظتك الخاصة عند إتمام الطلب. </span>
+                <strong>ملاحظات خاصة بالطلب</strong>
+                <span>يمكنك إضافة تفاصيل أو ملاحظاتك عند إتمام الطلب.</span>
               </div>
             </div>
           </div>
@@ -122,14 +123,14 @@
         <section class="related-products">
           <div class="related-products__heading">
             <div>
-              <span> قد يعجبك أيضًا </span>
+              <span>قد يعجبك أيضًا</span>
 
               <h2>منتجات مشابهة</h2>
             </div>
 
             <a routerLink="/products">
-              عرض جميع المنتجات
-              <span>←</span>
+              <span>عرض جميع المنتجات</span>
+              <svg lucideArrowLeft aria-hidden="true"></svg>
             </a>
           </div>
 
@@ -145,13 +146,20 @@
       }
     } @else {
       <div class="product-not-found">
-        <span> 404 </span>
+        <div class="product-not-found__icon">
+          <svg lucidePackage aria-hidden="true"></svg>
+        </div>
+
+        <span>404</span>
 
         <h1>المنتج غير موجود</h1>
 
-        <p>يبدو أن المنتج الذي تبحث عنه غير متوفر.</p>
+        <p>يبدو أن المنتج الذي تبحث عنه غير متوفر أو تم تغيير رابطه.</p>
 
-        <a routerLink="/products"> العودة إلى المنتجات </a>
+        <a routerLink="/products">
+          <span>العودة إلى المنتجات</span>
+          <svg lucideArrowLeft aria-hidden="true"></svg>
+        </a>
       </div>
     }
   </div>

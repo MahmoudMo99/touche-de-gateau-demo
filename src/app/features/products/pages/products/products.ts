@@ -1,6 +1,21 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import {
+  LucidePackage,
+  LucideRotateCcw,
+  LucideSearch,
+  LucideSlidersHorizontal,
+  LucideSparkles,
+  LucideX,
+} from '@lucide/angular';
 
 import { PRODUCTS } from '../../../../core/data/products.data';
 import { Product } from '../../../../core/models/product.model';
@@ -9,9 +24,18 @@ import { ProductCard } from '../../../../shared/components/product-card/product-
 
 @Component({
   selector: 'app-products',
-  imports: [ProductCard],
+  imports: [
+    ProductCard,
+    LucidePackage,
+    LucideRotateCcw,
+    LucideSearch,
+    LucideSlidersHorizontal,
+    LucideSparkles,
+    LucideX,
+  ],
   templateUrl: './products.html',
   styleUrl: './products.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Products {
   private readonly cartService = inject(CartService);
@@ -22,7 +46,6 @@ export class Products {
   });
 
   readonly products = PRODUCTS;
-
   readonly searchTerm = signal('');
   readonly selectedCategory = signal('الكل');
 
@@ -30,7 +53,6 @@ export class Products {
 
   readonly filteredProducts = computed(() => {
     const search = this.searchTerm().trim().toLowerCase();
-
     const category = this.selectedCategory();
 
     return this.products.filter((product) => {
@@ -47,19 +69,26 @@ export class Products {
     });
   });
 
+  readonly hasActiveFilters = computed(() => {
+    return this.searchTerm().trim().length > 0 || this.selectedCategory() !== 'الكل';
+  });
+
+  readonly totalProductsCount = computed(() => this.products.length);
+  readonly filteredProductsCount = computed(() => this.filteredProducts().length);
+
   constructor() {
     effect(() => {
       const search = this.queryParams().get('search') ?? '';
-
       const category = this.queryParams().get('category') ?? 'الكل';
 
       this.searchTerm.set(search);
 
       if (this.categories.includes(category)) {
         this.selectedCategory.set(category);
-      } else {
-        this.selectedCategory.set('الكل');
+        return;
       }
+
+      this.selectedCategory.set('الكل');
     });
   }
 
@@ -71,6 +100,10 @@ export class Products {
     const input = event.target as HTMLInputElement;
 
     this.searchTerm.set(input.value);
+  }
+
+  clearSearch(): void {
+    this.searchTerm.set('');
   }
 
   resetFilters(): void {

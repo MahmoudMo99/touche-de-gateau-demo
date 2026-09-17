@@ -3,13 +3,20 @@
     <img [src]="product().image" [alt]="product().nameAr" class="product-card__image" />
 
     <span class="product-card__code">
+      <svg lucidePackage aria-hidden="true"></svg>
       {{ product().code }}
+    </span>
+
+    <span class="product-card__view">
+      <svg lucideEye aria-hidden="true"></svg>
+      عرض التفاصيل
     </span>
   </a>
 
   <div class="product-card__content">
     <div class="product-card__category">
-      {{ product().category }}
+      <svg lucideSparkles aria-hidden="true"></svg>
+      <span>{{ product().category }}</span>
     </div>
 
     <a [routerLink]="['/products', product().id]" class="product-card__title">
@@ -18,6 +25,10 @@
 
     <p class="product-card__name-en">
       {{ product().nameEn }}
+    </p>
+
+    <p class="product-card__description">
+      {{ product().description }}
     </p>
 
     <div class="product-card__footer">
@@ -36,13 +47,13 @@
         type="button"
         class="product-card__add"
         [class.product-card__add--added]="added()"
-        [attr.aria-label]="added() ? 'تمت الإضافة إلى السلة' : 'إضافة إلى السلة'"
+        [attr.aria-label]="added() ? 'تمت الإضافة إلى السلة' : 'إضافة المنتج إلى السلة'"
         (click)="onAddToCart()"
       >
         @if (added()) {
-          ✓
+          <svg lucideCheck aria-hidden="true"></svg>
         } @else {
-          +
+          <svg lucidePlus aria-hidden="true"></svg>
         }
       </button>
     </div>

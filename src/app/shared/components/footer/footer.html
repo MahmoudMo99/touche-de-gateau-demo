@@ -1,33 +1,72 @@
 <footer class="footer">
   <div class="container footer__container">
     <div class="footer__brand">
-      <strong> TOUCHÉ </strong>
+      <div class="footer__logo">
+        <span class="footer__logo-icon">
+          <svg lucideCakeSlice aria-hidden="true"></svg>
+        </span>
 
-      <span> DE GATEAU </span>
+        <span class="footer__logo-text">
+          <strong>TOUCHÉ</strong>
+          <span>DE GATEAU</span>
+        </span>
+      </div>
 
-      <p>لمسات حلوة تجعل لحظاتكم أجمل.</p>
+      <p>
+        لمسات حلوة بتفاصيل أنيقة، وتشكيلة مختارة من الكيك والحلويات المناسبة للمناسبات واللحظات
+        الخاصة.
+      </p>
+
+      <span class="footer__demo-badge">
+        <svg lucideShoppingCart aria-hidden="true"></svg>
+        Demo Store
+      </span>
     </div>
 
     <div class="footer__links">
-      <a routerLink="/"> الرئيسية </a>
+      <h3>روابط سريعة</h3>
 
-      <a routerLink="/products"> المنتجات </a>
+      <a routerLink="/">
+        <svg lucideHome aria-hidden="true"></svg>
+        <span>الرئيسية</span>
+      </a>
 
-      <a href="/#about"> من نحن </a>
+      <a routerLink="/products">
+        <svg lucidePackage aria-hidden="true"></svg>
+        <span>المنتجات</span>
+      </a>
+
+      <a routerLink="/cart">
+        <svg lucideShoppingCart aria-hidden="true"></svg>
+        <span>السلة</span>
+      </a>
+
+      <a routerLink="/" fragment="about">
+        <svg lucideInfo aria-hidden="true"></svg>
+        <span>من نحن</span>
+      </a>
     </div>
 
     <div class="footer__contact">
-      <span> تواصل معنا </span>
+      <h3>بيانات التواصل</h3>
 
-      <a href="tel:+966566387733" dir="ltr"> +966 56 638 7733 </a>
+      <a [href]="phoneLink" aria-label="رقم الهاتف التجريبي">
+        <svg lucidePhone aria-hidden="true"></svg>
+        <span dir="ltr">{{ phoneDisplay }}</span>
+      </a>
 
-      <a href="mailto:touche.de.gateau@gmail.com"> touche.de.gateau@gmail.com </a>
+      <a [href]="'mailto:' + email" aria-label="البريد الإلكتروني التجريبي">
+        <svg lucideMail aria-hidden="true"></svg>
+        <span dir="ltr">{{ email }}</span>
+      </a>
+
+      <p>بيانات التواصل والأسعار داخل هذا المشروع مخصصة للعرض التجريبي فقط.</p>
     </div>
   </div>
 
   <div class="container footer__bottom">
-    <span> {{ currentYear }} © Touché de Gateau </span>
+    <span>{{ currentYear }} © Touché de Gateau Demo</span>
 
-    <span> نموذج تجريبي </span>
+    <span>Built as an Arabic RTL E-commerce Frontend</span>
   </div>
 </footer>

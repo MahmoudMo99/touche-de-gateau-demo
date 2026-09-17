@@ -1,21 +1,26 @@
 <header class="navbar">
   <div class="container navbar__container">
-    <a routerLink="/" class="navbar__brand">
-      <span class="navbar__brand-main"> TOUCHÉ </span>
+    <a routerLink="/" class="navbar__brand" aria-label="العودة إلى الصفحة الرئيسية">
+      <span class="navbar__brand-icon">
+        <svg lucideCakeSlice aria-hidden="true"></svg>
+      </span>
 
-      <span class="navbar__brand-sub"> DE GATEAU </span>
+      <span class="navbar__brand-text">
+        <span class="navbar__brand-main">TOUCHÉ</span>
+        <span class="navbar__brand-sub">DE GATEAU</span>
+      </span>
     </a>
 
-    <nav class="navbar__links">
+    <nav class="navbar__links" aria-label="روابط الموقع الرئيسية">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         الرئيسية
       </a>
 
-      <a routerLink="/products" routerLinkActive="active"> المنتجات </a>
+      <a routerLink="/products" routerLinkActive="active">المنتجات</a>
 
-      <a href="#about"> من نحن </a>
+      <a routerLink="/" fragment="about">من نحن</a>
 
-      <a href="#contact"> تواصل معنا </a>
+      <a routerLink="/" fragment="contact">تواصل معنا</a>
     </nav>
 
     <div class="navbar__actions">
@@ -32,11 +37,7 @@
             />
 
             <button type="button" aria-label="تنفيذ البحث" (click)="search()">
-              <svg viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="7" />
-
-                <path d="m20 20-3.8-3.8" />
-              </svg>
+              <svg lucideSearch aria-hidden="true"></svg>
             </button>
           </div>
         }
@@ -45,31 +46,19 @@
           class="navbar__icon-button"
           type="button"
           [attr.aria-label]="searchOpened() ? 'إغلاق البحث' : 'فتح البحث'"
+          [attr.aria-expanded]="searchOpened()"
           (click)="toggleSearch()"
         >
           @if (searchOpened()) {
-            <svg viewBox="0 0 24 24">
-              <path d="M6 6l12 12" />
-              <path d="M18 6L6 18" />
-            </svg>
+            <svg lucideX aria-hidden="true"></svg>
           } @else {
-            <svg viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="7" />
-
-              <path d="m20 20-3.8-3.8" />
-            </svg>
+            <svg lucideSearch aria-hidden="true"></svg>
           }
         </button>
       </div>
 
       <a routerLink="/cart" class="navbar__icon-button navbar__cart" aria-label="السلة">
-        <svg viewBox="0 0 24 24">
-          <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L20 8H6" />
-
-          <circle cx="10" cy="20" r="1" />
-
-          <circle cx="17" cy="20" r="1" />
-        </svg>
+        <svg lucideShoppingCart aria-hidden="true"></svg>
 
         @if (cartService.totalItems() > 0) {
           <span class="navbar__cart-count">
@@ -77,6 +66,46 @@
           </span>
         }
       </a>
+
+      <button
+        class="navbar__icon-button navbar__menu-button"
+        type="button"
+        [attr.aria-label]="menuOpened() ? 'إغلاق القائمة' : 'فتح القائمة'"
+        [attr.aria-expanded]="menuOpened()"
+        (click)="toggleMenu()"
+      >
+        @if (menuOpened()) {
+          <svg lucideX aria-hidden="true"></svg>
+        } @else {
+          <svg lucideMenu aria-hidden="true"></svg>
+        }
+      </button>
     </div>
   </div>
+
+  @if (menuOpened()) {
+    <div class="navbar__mobile-panel">
+      <div class="container navbar__mobile-container">
+        <a routerLink="/" (click)="closeMenu()">
+          <svg lucideHome aria-hidden="true"></svg>
+          <span>الرئيسية</span>
+        </a>
+
+        <a routerLink="/products" (click)="closeMenu()">
+          <svg lucidePackage aria-hidden="true"></svg>
+          <span>المنتجات</span>
+        </a>
+
+        <a routerLink="/" fragment="about" (click)="closeMenu()">
+          <svg lucideInfo aria-hidden="true"></svg>
+          <span>من نحن</span>
+        </a>
+
+        <a routerLink="/" fragment="contact" (click)="closeMenu()">
+          <svg lucidePhone aria-hidden="true"></svg>
+          <span>تواصل معنا</span>
+        </a>
+      </div>
+    </div>
+  }
 </header>

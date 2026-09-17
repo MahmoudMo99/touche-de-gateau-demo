@@ -1,12 +1,20 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
+
+import { PRODUCTS } from '../data/products.data';
 import { CartItem } from '../models/cart-item.model';
 import { Product } from '../models/product.model';
+
+interface StoredCartItem {
+  productId: number;
+  quantity: number;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private readonly _items = signal<CartItem[]>([]);
+  private readonly storageKey = 'touche_de_gateau_cart_items';
+  private readonly _items = signal<CartItem[]>(this.readStoredItems());
 
   readonly items = this._items.asReadonly();
 
@@ -14,12 +22,22 @@ export class CartService {
     this._items().reduce((total, item) => total + item.quantity, 0),
   );
 
+  readonly uniqueItemsCount = computed(() => this._items().length);
+
   readonly totalPrice = computed(() =>
     this._items().reduce((total, item) => total + item.product.price * item.quantity, 0),
   );
 
+  constructor() {
+    effect(() => {
+      this.saveItems(this._items());
+    });
+  }
+
   addProduct(product: Product, quantity = 1): void {
-    if (quantity <= 0) {
+    const safeQuantity = Math.floor(quantity);
+
+    if (safeQuantity <= 0) {
       return;
     }
 
@@ -31,7 +49,7 @@ export class CartService {
           item.product.id === product.id
             ? {
                 ...item,
-                quantity: item.quantity + quantity,
+                quantity: item.quantity + safeQuantity,
               }
             : item,
         );
@@ -41,7 +59,7 @@ export class CartService {
         ...items,
         {
           product,
-          quantity,
+          quantity: safeQuantity,
         },
       ];
     });
@@ -81,5 +99,65 @@ export class CartService {
 
   clearCart(): void {
     this._items.set([]);
+  }
+
+  private readStoredItems(): CartItem[] {
+    try {
+      if (typeof localStorage === 'undefined') {
+        return [];
+      }
+
+      const storedValue = localStorage.getItem(this.storageKey);
+
+      if (!storedValue) {
+        return [];
+      }
+
+      const storedItems = JSON.parse(storedValue) as StoredCartItem[];
+
+      if (!Array.isArray(storedItems)) {
+        return [];
+      }
+
+      return storedItems
+        .map((item) => {
+          const product = PRODUCTS.find((product) => product.id === Number(item.productId));
+          const quantity = Math.max(1, Math.floor(Number(item.quantity) || 1));
+
+          if (!product) {
+            return null;
+          }
+
+          return {
+            product,
+            quantity,
+          };
+        })
+        .filter((item): item is CartItem => item !== null);
+    } catch {
+      return [];
+    }
+  }
+
+  private saveItems(items: CartItem[]): void {
+    try {
+      if (typeof localStorage === 'undefined') {
+        return;
+      }
+
+      if (items.length === 0) {
+        localStorage.removeItem(this.storageKey);
+        return;
+      }
+
+      const storedItems: StoredCartItem[] = items.map((item) => ({
+        productId: item.product.id,
+        quantity: item.quantity,
+      }));
+
+      localStorage.setItem(this.storageKey, JSON.stringify(storedItems));
+    } catch {
+      return;
+    }
   }
 }

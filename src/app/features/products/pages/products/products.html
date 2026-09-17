@@ -1,56 +1,88 @@
 <section class="products-page">
   <div class="products-hero">
-    <div class="container">
-      <span class="products-hero__eyebrow"> تشكيلتنا </span>
+    <div class="container products-hero__container">
+      <span class="products-hero__eyebrow">
+        <svg lucideSparkles aria-hidden="true"></svg>
+        تشكيلتنا
+      </span>
 
       <h1>
         لكل لحظة
         <span>اختيارها المميز</span>
       </h1>
 
-      <p>اكتشف تشكيلة Touché de Gateau من الكيك والحلويات المختارة بعناية لمختلف المناسبات.</p>
+      <p>
+        تصفح تشكيلة Touché de Gateau من الكيك، التشيز كيك، الميني كيك، وقطع الحلوى المناسبة
+        للمناسبات والضيافة واللحظات الخاصة.
+      </p>
+
+      <div class="products-hero__stats" aria-label="إحصائيات المنتجات">
+        <div>
+          <strong>{{ totalProductsCount() }}</strong>
+          <span>منتج متاح</span>
+        </div>
+
+        <div>
+          <strong>{{ categories.length - 1 }}</strong>
+          <span>تصنيفات</span>
+        </div>
+
+        <div>
+          <strong>{{ filteredProductsCount() }}</strong>
+          <span>نتيجة ظاهرة</span>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="products-content">
     <div class="container">
-      <div class="products-toolbar">
-        <div class="products-search">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="11" cy="11" r="7" />
+      <div class="products-panel">
+        <div class="products-toolbar">
+          <div class="products-search">
+            <svg lucideSearch aria-hidden="true"></svg>
 
-            <path d="m20 20-3.8-3.8" />
-          </svg>
+            <input
+              type="search"
+              placeholder="ابحث باسم المنتج أو الكود..."
+              aria-label="البحث في المنتجات"
+              [value]="searchTerm()"
+              (input)="onSearch($event)"
+            />
 
-          <input
-            type="search"
-            placeholder="ابحث باسم المنتج أو الكود..."
-            aria-label="البحث في المنتجات"
-            [value]="searchTerm()"
-            (input)="onSearch($event)"
-          />
+            @if (searchTerm()) {
+              <button type="button" aria-label="مسح البحث" (click)="clearSearch()">
+                <svg lucideX aria-hidden="true"></svg>
+              </button>
+            }
+          </div>
+
+          <div class="products-count">
+            <span>المعروض الآن</span>
+            <strong>{{ filteredProductsCount() }}</strong>
+            <span>منتج</span>
+          </div>
         </div>
 
-        <div class="products-count">
-          <strong>
-            {{ filteredProducts().length }}
-          </strong>
+        <div class="categories-filter" aria-label="تصفية المنتجات حسب التصنيف">
+          <span class="categories-filter__label">
+            <svg lucideSlidersHorizontal aria-hidden="true"></svg>
+            التصنيفات
+          </span>
 
-          <span> منتج </span>
+          <div class="categories-filter__buttons">
+            @for (category of categories; track category) {
+              <button
+                type="button"
+                class="categories-filter__button"
+                [class.categories-filter__button--active]="selectedCategory() === category"
+                (click)="selectCategory(category)"
+              >
+                {{ category }}
+              </button>
+            }
+          </div>
         </div>
-      </div>
-
-      <div class="categories-filter">
-        @for (category of categories; track category) {
-          <button
-            type="button"
-            class="categories-filter__button"
-            [class.categories-filter__button--active]="selectedCategory() === category"
-            (click)="selectCategory(category)"
-          >
-            {{ category }}
-          </button>
-        }
       </div>
 
       @if (filteredProducts().length > 0) {
@@ -62,18 +94,17 @@
       } @else {
         <div class="products-empty">
           <div class="products-empty__icon">
-            <svg viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="7" />
-
-              <path d="m20 20-3.8-3.8" />
-            </svg>
+            <svg lucidePackage aria-hidden="true"></svg>
           </div>
 
-          <h2>لم نجد منتجات</h2>
+          <h2>لم نجد منتجات مطابقة</h2>
 
-          <p>جرّب البحث باسم مختلف أو اختر تصنيفًا آخر.</p>
+          <p>لا توجد نتائج بنفس البحث أو التصنيف الحالي. جرّب كلمة مختلفة أو اعرض كل المنتجات.</p>
 
-          <button type="button" (click)="resetFilters()">عرض كل المنتجات</button>
+          <button type="button" (click)="resetFilters()">
+            <svg lucideRotateCcw aria-hidden="true"></svg>
+            <span>عرض كل المنتجات</span>
+          </button>
         </div>
       }
     </div>

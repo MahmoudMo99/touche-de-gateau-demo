@@ -1,54 +1,65 @@
 <section class="hero">
   <div class="container hero__container">
     <div class="hero__content">
-      <span class="hero__eyebrow"> لمسات حلوة لكل مناسبة </span>
-
       <h1 class="hero__title">
-        لأن كل لحظة
-        <span>تستحق مذاقًا مميزًا</span>
+        لحظاتك الحلوة
+        <span>تستحق اختيارًا مميزًا</span>
       </h1>
 
       <p class="hero__description">
-        اكتشف تشكيلة مختارة من الكيك والحلويات المُحضّرة بعناية لتكون جزءًا من أجمل لحظاتكم.
+        اكتشف تشكيلة مختارة من الكيك والحلويات بنكهات متنوعة وتصميمات أنيقة، وجهّز طلبك بسهولة
+        لمناسباتك ولحظاتك الخاصة.
       </p>
 
       <div class="hero__actions">
         <a routerLink="/products" class="btn btn--primary">
-          اكتشف منتجاتنا
-
-          <svg viewBox="0 0 24 24">
-            <path d="M19 12H5" />
-            <path d="m12 19-7-7 7-7" />
-          </svg>
+          <span>تصفح المنتجات</span>
+          <svg lucideArrowLeft aria-hidden="true"></svg>
         </a>
 
-        <a href="#featured" class="btn btn--secondary"> الأكثر طلبًا </a>
+        <a href="#featured" class="btn btn--secondary">
+          <svg lucideHeart aria-hidden="true"></svg>
+          <span>الأكثر تميزًا</span>
+        </a>
       </div>
 
-      <div class="hero__features">
+      <div class="hero__features" aria-label="مميزات المتجر">
         <div class="hero__feature">
-          <span>01</span>
-          <p>منتجات مختارة بعناية</p>
+          <span>
+            <svg lucideStore aria-hidden="true"></svg>
+          </span>
+          <p>تشكيلة متنوعة</p>
         </div>
 
         <div class="hero__feature">
-          <span>02</span>
+          <span>
+            <svg lucideShoppingCart aria-hidden="true"></svg>
+          </span>
           <p>طلب سريع وسهل</p>
         </div>
 
         <div class="hero__feature">
-          <span>03</span>
-          <p>مناسب لكل المناسبات</p>
+          <span>
+            <svg lucideBadgeCheck aria-hidden="true"></svg>
+          </span>
+          <p>مناسب لكل مناسبة</p>
         </div>
       </div>
     </div>
 
     <div class="hero__visual">
       <div class="hero__image-wrapper">
-        <img src="/images/hero-cake.png" alt="كيك من Touché de Gateau" class="hero__image" />
+        <img
+          src="/images/hero-cake.png"
+          alt="قطعة كيك شوكولاتة من Touché de Gateau"
+          class="hero__image"
+        />
 
         <div class="hero__badge">
-          <span>Touché</span>
+          <span>
+            <svg lucideCakeSlice aria-hidden="true"></svg>
+            Touché
+          </span>
           <small>لحظات بطعم أجمل</small>
         </div>
       </div>
@@ -63,14 +74,14 @@
   <div class="container">
     <div class="section-heading">
       <div>
-        <span class="section-heading__eyebrow"> اكتشف تشكيلتنا </span>
+        <span class="section-heading__eyebrow">اكتشف التشكيلة</span>
 
-        <h2>اختر ما يناسب لحظتك</h2>
+        <h2>اختر التصنيف المناسب لطلبك</h2>
       </div>
 
       <a routerLink="/products" class="section-heading__link">
-        عرض جميع المنتجات
-        <span>←</span>
+        <span>عرض جميع المنتجات</span>
+        <svg lucideArrowLeft aria-hidden="true"></svg>
       </a>
     </div>
 
@@ -81,55 +92,70 @@
         class="category-card category-card--large"
       >
         <div class="category-card__image">
-          <img src="/images/categories/cakes.jpg" alt="الكيك" />
+          <img src="/images/categories/cakes.jpg" alt="تشكيلة كيك" />
         </div>
 
         <div class="category-card__overlay"></div>
 
         <div class="category-card__content">
-          <span>01</span>
+          <span>
+            <svg lucideCakeSlice aria-hidden="true"></svg>
+            01
+          </span>
 
           <h3>الكيك</h3>
 
-          <p>تشكيلة متنوعة لكل مناسبة</p>
+          <p>اختيارات أنيقة للاحتفالات والمناسبات</p>
 
-          <div class="category-card__arrow">←</div>
+          <div class="category-card__arrow" aria-hidden="true">
+            <svg lucideArrowLeft></svg>
+          </div>
         </div>
       </a>
 
       <a routerLink="/products" [queryParams]="{ category: 'تشيز كيك' }" class="category-card">
         <div class="category-card__image">
-          <img src="/images/categories/cheesecake.jpg" alt="التشيز كيك" />
+          <img src="/images/categories/cheesecake.jpg" alt="تشيز كيك" />
         </div>
 
         <div class="category-card__overlay"></div>
 
         <div class="category-card__content">
-          <span>02</span>
+          <span>
+            <svg lucideSparkles aria-hidden="true"></svg>
+            02
+          </span>
 
           <h3>التشيز كيك</h3>
 
-          <p>نكهات خفيفة وغنية</p>
+          <p>نكهات كريمية خفيفة وغنية</p>
 
-          <div class="category-card__arrow">←</div>
+          <div class="category-card__arrow" aria-hidden="true">
+            <svg lucideArrowLeft></svg>
+          </div>
         </div>
       </a>
 
       <a routerLink="/products" [queryParams]="{ category: 'ميني كيك' }" class="category-card">
         <div class="category-card__image">
-          <img src="/images/categories/mini-desserts.jpg" alt="الحلويات الصغيرة" />
+          <img src="/images/categories/mini-desserts.jpg" alt="ميني كيك وحلويات صغيرة" />
         </div>
 
         <div class="category-card__overlay"></div>
 
         <div class="category-card__content">
-          <span>03</span>
+          <span>
+            <svg lucideGift aria-hidden="true"></svg>
+            03
+          </span>
 
-          <h3>الحلويات الصغيرة</h3>
+          <h3>الميني كيك</h3>
 
-          <p>تفاصيل صغيرة بطعم مميز</p>
+          <p>قطع صغيرة مناسبة للضيافة والتجربة</p>
 
-          <div class="category-card__arrow">←</div>
+          <div class="category-card__arrow" aria-hidden="true">
+            <svg lucideArrowLeft></svg>
+          </div>
         </div>
       </a>
 
@@ -139,19 +165,24 @@
         class="category-card category-card--wide"
       >
         <div class="category-card__image">
-          <img src="/images/categories/bakery.jpg" alt="قطع الكيك" />
+          <img src="/images/categories/bakery.jpg" alt="قطع كيك ومخبوزات حلوة" />
         </div>
 
         <div class="category-card__overlay"></div>
 
         <div class="category-card__content">
-          <span>04</span>
+          <span>
+            <svg lucideShoppingBag aria-hidden="true"></svg>
+            04
+          </span>
 
           <h3>قطع الكيك</h3>
 
-          <p>اختيارات صغيرة لمذاق مميز</p>
+          <p>اختيارات فردية بطعم مميز</p>
 
-          <div class="category-card__arrow">←</div>
+          <div class="category-card__arrow" aria-hidden="true">
+            <svg lucideArrowLeft></svg>
+          </div>
         </div>
       </a>
     </div>
@@ -162,14 +193,14 @@
   <div class="container">
     <div class="section-heading">
       <div>
-        <span class="section-heading__eyebrow"> مختاراتنا </span>
+        <span class="section-heading__eyebrow">مختاراتنا</span>
 
         <h2>منتجات تستحق التجربة</h2>
       </div>
 
       <a routerLink="/products" class="section-heading__link">
-        اكتشف جميع المنتجات
-        <span>←</span>
+        <span>اكتشف جميع المنتجات</span>
+        <svg lucideArrowLeft aria-hidden="true"></svg>
       </a>
     </div>
 
@@ -184,44 +215,53 @@
 <section class="about" id="about">
   <div class="container about__container">
     <div class="about__image">
-      <img src="/images/categories/bakery.jpg" alt="Touché de Gateau" />
+      <img src="/images/categories/bakery.jpg" alt="مخبوزات وحلويات من Touché de Gateau" />
 
-      <span class="about__badge"> TOUCHÉ DE GATEAU </span>
+      <span class="about__badge">
+        <svg lucideCakeSlice aria-hidden="true"></svg>
+        TOUCHÉ DE GATEAU
+      </span>
     </div>
 
     <div class="about__content">
-      <span class="about__eyebrow"> قصتنا </span>
+      <span class="about__eyebrow">لمستنا</span>
 
       <h2>
         أكثر من مجرد
-        <span> قطعة حلوى </span>
+        <span>قطعة حلوى</span>
       </h2>
 
       <p>
-        في Touché de Gateau نؤمن أن الحلوى جزء من اللحظات التي نتذكرها. لذلك نهتم بالتفاصيل لنقدم
-        تجربة تناسب مناسباتكم ولحظاتكم الخاصة.
+        في Touché de Gateau نهتم بتقديم تجربة اختيار سهلة ومنظمة، تساعدك تجد المنتج المناسب
+        لمناسبتك، وتراجع تفاصيله، وتضيفه إلى سلتك بخطوات بسيطة وواضحة.
       </p>
 
       <div class="about__features">
         <div>
-          <strong>01</strong>
-          <span>اهتمام بالتفاصيل</span>
+          <strong>
+            <svg lucideStore aria-hidden="true"></svg>
+          </strong>
+          <span>تصنيفات واضحة</span>
         </div>
 
         <div>
-          <strong>02</strong>
-          <span>تشكيلة متنوعة</span>
+          <strong>
+            <svg lucideSearch aria-hidden="true"></svg>
+          </strong>
+          <span>تصفح وبحث أسهل</span>
         </div>
 
         <div>
-          <strong>03</strong>
-          <span>تجربة طلب سهلة</span>
+          <strong>
+            <svg lucideBadgeCheck aria-hidden="true"></svg>
+          </strong>
+          <span>طلب بخطوات بسيطة</span>
         </div>
       </div>
 
       <a routerLink="/products" class="about__link">
-        اكتشف تشكيلتنا
-        <span>←</span>
+        <span>مشاهدة التشكيلة</span>
+        <svg lucideArrowLeft aria-hidden="true"></svg>
       </a>
     </div>
   </div>
@@ -230,15 +270,18 @@
 <section class="home-cta" id="contact">
   <div class="container">
     <div class="home-cta__box">
-      <span class="home-cta__eyebrow"> اختر لحظتك </span>
+      <span class="home-cta__eyebrow">
+        <svg lucideShoppingBag aria-hidden="true"></svg>
+        اختر لحظتك
+      </span>
 
       <h2>شيء مميز لكل مناسبة</h2>
 
-      <p>اختر ما يناسبك من تشكيلتنا وأضف تفاصيل طلبك، ونحن نتولى الباقي.</p>
+      <p>اختر ما يناسبك من تشكيلتنا، أضفه إلى السلة، وراجع تفاصيل طلبك بسهولة من أي جهاز.</p>
 
       <a routerLink="/products">
-        ابدأ طلبك
-        <span>←</span>
+        <span>ابدأ طلبك</span>
+        <svg lucideArrowLeft aria-hidden="true"></svg>
       </a>
     </div>
   </div>
