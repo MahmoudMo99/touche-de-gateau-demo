@@ -10,6 +10,8 @@ import {
   LucideShoppingCart,
 } from '@lucide/angular';
 
+import { STORE_INFO } from '../../../core/data/store-info.data';
+
 @Component({
   selector: 'app-footer',
   imports: [
@@ -28,8 +30,5 @@ import {
 })
 export class Footer {
   readonly currentYear = new Date().getFullYear();
-
-  readonly phoneDisplay = '+966 50 000 0000';
-  readonly phoneLink = 'tel:+966500000000';
-  readonly email = 'demo@touche-demo.com';
+  readonly storeInfo = STORE_INFO;
 }

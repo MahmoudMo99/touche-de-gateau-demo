@@ -18,6 +18,7 @@ import {
 } from '@lucide/angular';
 import { HotToastService } from '@ngxpert/hot-toast';
 
+import { STORE_INFO } from '../../../../core/data/store-info.data';
 import { CartService } from '../../../../core/services/cart.service';
 
 @Component({
@@ -48,6 +49,7 @@ export class Checkout {
   private readonly toastService = inject(HotToastService);
 
   readonly cartService = inject(CartService);
+  readonly storeInfo = STORE_INFO;
 
   readonly orderSubmitted = signal(false);
   readonly orderNumber = signal('');

@@ -7,8 +7,8 @@
         </span>
 
         <span class="footer__logo-text">
-          <strong>TOUCHÉ</strong>
-          <span>DE GATEAU</span>
+          <strong>{{ storeInfo.brand.main }}</strong>
+          <span>{{ storeInfo.brand.sub }}</span>
         </span>
       </div>
 
@@ -19,7 +19,7 @@
 
       <span class="footer__demo-badge">
         <svg lucideShoppingCart aria-hidden="true"></svg>
-        Demo Store
+        {{ storeInfo.demo.badge }}
       </span>
     </div>
 
@@ -50,22 +50,22 @@
     <div class="footer__contact">
       <h3>بيانات التواصل</h3>
 
-      <a [href]="phoneLink" aria-label="رقم الهاتف التجريبي">
+      <a [href]="storeInfo.contact.phoneLink" aria-label="رقم الهاتف التجريبي">
         <svg lucidePhone aria-hidden="true"></svg>
-        <span dir="ltr">{{ phoneDisplay }}</span>
+        <span dir="ltr">{{ storeInfo.contact.phoneDisplay }}</span>
       </a>
 
-      <a [href]="'mailto:' + email" aria-label="البريد الإلكتروني التجريبي">
+      <a [href]="'mailto:' + storeInfo.contact.email" aria-label="البريد الإلكتروني التجريبي">
         <svg lucideMail aria-hidden="true"></svg>
-        <span dir="ltr">{{ email }}</span>
+        <span dir="ltr">{{ storeInfo.contact.email }}</span>
       </a>
 
-      <p>بيانات التواصل والأسعار داخل هذا المشروع مخصصة للعرض التجريبي فقط.</p>
+      <p>{{ storeInfo.demo.footerNote }}</p>
     </div>
   </div>
 
   <div class="container footer__bottom">
-    <span>{{ currentYear }} © Touché de Gateau Demo</span>
+    <span>{{ currentYear }} © {{ storeInfo.brand.demoName }}</span>
 
     <span>Built as an Arabic RTL E-commerce Frontend</span>
   </div>

@@ -8,12 +8,8 @@
 
         <span>تم استلام الطلب</span>
 
-        <h1>شكرًا لاختيارك Touché</h1>
-
-        <p>
-          تم تسجيل الطلب داخل النموذج التجريبي بنجاح. في النسخة الحقيقية يمكن ربط هذه الخطوة بواتساب
-          أو لوحة تحكم أو بوابة دفع.
-        </p>
+        <h1>شكرًا لاختيارك {{ storeInfo.brand.shortName }}</h1>
+        <p>{{ storeInfo.demo.successNote }}</p>
 
         <div class="order-success__number">
           <span>رقم الطلب التجريبي</span>
@@ -116,7 +112,7 @@
                   id="phone"
                   type="tel"
                   formControlName="phone"
-                  placeholder="+966500000000"
+                  [placeholder]="storeInfo.contact.phonePlaceholder"
                   maxlength="13"
                   autocomplete="tel"
                   dir="ltr"
@@ -134,7 +130,8 @@
                   checkoutForm.controls.phone.hasError('pattern')
                 ) {
                   <small class="form-error">
-                    يرجى إدخال رقم سعودي صحيح مثل +966500000000 أو 0500000000.
+                    يرجى إدخال رقم سعودي صحيح مثل {{ storeInfo.contact.phonePlaceholder }} أو
+                    0500000000.
                   </small>
                 }
               </div>
@@ -319,7 +316,7 @@
 
                 <span class="checkout-summary__price">
                   {{ item.product.price * item.quantity }}
-                  ر.س
+                  {{ storeInfo.currency }}
                 </span>
               </div>
             }
@@ -331,7 +328,7 @@
 
               <strong>
                 {{ cartService.totalPrice() }}
-                ر.س
+                {{ storeInfo.currency }}
               </strong>
             </div>
 
@@ -350,7 +347,7 @@
 
             <strong>
               {{ cartService.totalPrice() }}
-              <small>ر.س</small>
+              <small>{{ storeInfo.currency }}</small>
             </strong>
           </div>
 
@@ -360,7 +357,7 @@
           </button>
 
           <p class="checkout-summary__note">
-            هذا نموذج تجريبي، ولن يتم تنفيذ أي عملية دفع أو إرسال طلب حقيقي.
+            {{ storeInfo.demo.checkoutNote }}
           </p>
         </aside>
       </div>

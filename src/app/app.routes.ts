@@ -1,23 +1,23 @@
 import { Routes } from '@angular/router';
 
+import { STORE_INFO } from './core/data/store-info.data';
+
 export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./features/home/pages/home/home').then((m) => m.Home),
-    title: 'Touché de Gateau Demo | متجر حلويات عربي',
+    title: `${STORE_INFO.brand.demoName} | متجر حلويات عربي`,
     data: {
-      description:
-        'متجر حلويات عربي تجريبي لعرض الكيك والحلويات، تصفح المنتجات، السلة، وتجربة إتمام الطلب بواجهة RTL متجاوبة.',
+      description: STORE_INFO.seo.homeDescription,
     },
   },
   {
     path: 'products',
     loadComponent: () =>
       import('./features/products/pages/products/products').then((m) => m.Products),
-    title: 'المنتجات | Touché de Gateau Demo',
+    title: `المنتجات | ${STORE_INFO.brand.demoName}`,
     data: {
-      description:
-        'تصفح تشكيلة Touché de Gateau من الكيك، التشيز كيك، الميني كيك، وقطع الحلوى المناسبة للمناسبات والضيافة.',
+      description: STORE_INFO.seo.productsDescription,
     },
   },
   {
@@ -26,29 +26,26 @@ export const routes: Routes = [
       import('./features/product-details/pages/product-details/product-details').then(
         (m) => m.ProductDetails,
       ),
-    title: 'تفاصيل المنتج | Touché de Gateau Demo',
+    title: `تفاصيل المنتج | ${STORE_INFO.brand.demoName}`,
     data: {
-      description:
-        'اعرض تفاصيل المنتج، السعر، الوصف، الكمية، وأضف المنتج إلى السلة داخل تجربة متجر حلويات عربية.',
+      description: STORE_INFO.seo.productDetailsDescription,
     },
   },
   {
     path: 'cart',
     loadComponent: () => import('./features/cart/pages/cart/cart').then((m) => m.Cart),
-    title: 'سلة المشتريات | Touché de Gateau Demo',
+    title: `سلة المشتريات | ${STORE_INFO.brand.demoName}`,
     data: {
-      description:
-        'راجع المنتجات المضافة إلى السلة، عدل الكميات، واحسب الإجمالي المبدئي قبل إتمام الطلب.',
+      description: STORE_INFO.seo.cartDescription,
     },
   },
   {
     path: 'checkout',
     loadComponent: () =>
       import('./features/checkout/pages/checkout/checkout').then((m) => m.Checkout),
-    title: 'إتمام الطلب | Touché de Gateau Demo',
+    title: `إتمام الطلب | ${STORE_INFO.brand.demoName}`,
     data: {
-      description:
-        'واجهة إتمام طلب تجريبية تشمل بيانات العميل، عنوان التوصيل، ملاحظات الطلب، وطريقة الدفع.',
+      description: STORE_INFO.seo.checkoutDescription,
     },
   },
   {
